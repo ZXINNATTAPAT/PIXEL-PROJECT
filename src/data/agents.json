@@ -1,0 +1,218 @@
+{
+  "_note": "SAMPLE DATA ONLY - statuses and tasks below are made up for the MVP. Edit this file to update the office.",
+  "updatedAt": "2026-11-09 13:00 (UTC+7)",
+  "rooms": [
+    {
+      "id": "exec",
+      "name": "Executive Room",
+      "accent": "#a78bfa"
+    },
+    {
+      "id": "cps",
+      "name": "CPS Office",
+      "accent": "#f472b6"
+    },
+    {
+      "id": "growth",
+      "name": "Growth / Ops",
+      "accent": "#34d399"
+    }
+  ],
+  "agents": [
+    {
+      "id": "raphael",
+      "name": "Raphael · CEO",
+      "short": "Raphael",
+      "room": "exec",
+      "status": "working",
+      "task": "Reviewing team priorities for the week",
+      "look": {
+        "hair": "#f2c14e",
+        "skin": "#f6d3b3",
+        "shirt": "#7b4fd6",
+        "accessory": "crown"
+      }
+    },
+    {
+      "id": "cio",
+      "name": "CIO · SA&BA",
+      "short": "CIO",
+      "room": "exec",
+      "status": "waiting",
+      "task": "Requirements draft ready — needs your decision",
+      "look": {
+        "hair": "#3b2a20",
+        "skin": "#e8b991",
+        "shirt": "#2f80ed",
+        "accessory": "glasses"
+      }
+    },
+    {
+      "id": "cto",
+      "name": "CTO · Tech lead",
+      "short": "CTO",
+      "room": "exec",
+      "status": "working",
+      "task": "Building the Pixel Office MVP",
+      "look": {
+        "hair": "#1f1f2b",
+        "skin": "#f1c7a1",
+        "shirt": "#27ae60",
+        "accessory": "headset"
+      }
+    },
+    {
+      "id": "cqo",
+      "name": "CQO · QA",
+      "short": "CQO",
+      "room": "exec",
+      "status": "idle",
+      "task": "No QA tasks in the queue",
+      "look": {
+        "hair": "#8e5a3c",
+        "skin": "#f6d3b3",
+        "shirt": "#e67e22",
+        "longHair": true
+      }
+    },
+    {
+      "id": "tester",
+      "name": "Tester",
+      "short": "Tester",
+      "room": "exec",
+      "status": "done",
+      "task": "Regression checklist passed",
+      "look": {
+        "hair": "#d35454",
+        "skin": "#e8b991",
+        "shirt": "#16a085",
+        "accessory": "cap"
+      }
+    },
+    {
+      "id": "cro",
+      "name": "CRO · Chief Risk Officer",
+      "short": "CRO",
+      "room": "exec",
+      "status": "waiting",
+      "task": "Risk note awaiting sign-off",
+      "look": {
+        "hair": "#5b5b6e",
+        "skin": "#d9a47c",
+        "shirt": "#34495e",
+        "accessory": "glasses"
+      }
+    },
+    {
+      "id": "diablo",
+      "name": "Diablo · Personal Chief of Staff",
+      "short": "Diablo",
+      "room": "cps",
+      "status": "working",
+      "task": "Organising today's schedule & inbox",
+      "look": {
+        "hair": "#2a1a2e",
+        "skin": "#f1c7a1",
+        "shirt": "#b03a48",
+        "accessory": "horns"
+      }
+    },
+    {
+      "id": "testarossa",
+      "name": "Testarossa · Decision Journal",
+      "short": "Testarossa",
+      "room": "cps",
+      "status": "done",
+      "task": "Logged the latest decision entry",
+      "look": {
+        "hair": "#c0392b",
+        "skin": "#f6d3b3",
+        "shirt": "#e74c3c",
+        "longHair": true,
+        "accessory": "bow"
+      }
+    },
+    {
+      "id": "michael",
+      "name": "Michael · CCO",
+      "short": "Michael",
+      "room": "cps",
+      "status": "idle",
+      "task": "Standing by for content requests",
+      "look": {
+        "hair": "#e0c27a",
+        "skin": "#e8b991",
+        "shirt": "#9b59b6"
+      }
+    },
+    {
+      "id": "research-n",
+      "name": "Research • nattazxin",
+      "short": "Research N",
+      "room": "cps",
+      "status": "working",
+      "task": "Collecting sources for the weekly brief",
+      "look": {
+        "hair": "#4a3426",
+        "skin": "#f1c7a1",
+        "shirt": "#2d9cdb",
+        "accessory": "glasses"
+      }
+    },
+    {
+      "id": "research-a",
+      "name": "Research · Affiliate Shop",
+      "short": "Research A",
+      "room": "cps",
+      "status": "blocked",
+      "task": "Waiting for access to the shop dashboard",
+      "look": {
+        "hair": "#6d4c41",
+        "skin": "#d9a47c",
+        "shirt": "#f2994a",
+        "longHair": true
+      }
+    },
+    {
+      "id": "cerberus",
+      "name": "Cerberus · PFC",
+      "short": "Cerberus",
+      "room": "cps",
+      "status": "idle",
+      "task": "Monitoring — nothing new",
+      "look": {
+        "hair": "#3d3d4d",
+        "skin": "#e8b991",
+        "shirt": "#56606e",
+        "accessory": "cap"
+      }
+    },
+    {
+      "id": "alex",
+      "name": "Alex · EMAIL MANAGER",
+      "short": "Alex",
+      "room": "growth",
+      "status": "working",
+      "task": "Triaging the inbox",
+      "look": {
+        "hair": "#a0522d",
+        "skin": "#f6d3b3",
+        "shirt": "#1abc9c",
+        "accessory": "headset"
+      }
+    },
+    {
+      "id": "cgo",
+      "name": "CGO · Chief Growth Officer",
+      "short": "CGO",
+      "room": "growth",
+      "status": "idle",
+      "task": "Brainstorming growth ideas",
+      "look": {
+        "hair": "#2c3e50",
+        "skin": "#d9a47c",
+        "shirt": "#f1c40f"
+      }
+    }
+  ]
+}
