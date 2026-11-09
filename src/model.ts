@@ -12,6 +12,7 @@ export interface Look {
 
 export interface Agent {
   id: string
+  agentId?: string
   name: string
   short: string
   room: string
@@ -29,6 +30,8 @@ export interface Room {
 export interface OfficeData {
   _note: string
   updatedAt: string
+  fetchedAt?: string
+  source?: string
   rooms: Room[]
   agents: Agent[]
 }
@@ -51,4 +54,19 @@ export function shade(color: number, amt: number): number {
   const g = f((color >> 8) & 255)
   const b = f(color & 255)
   return (r << 16) | (g << 8) | b
+}
+
+export type DataSource =
+  | { kind: 'loading' }
+  | { kind: 'offline' }
+  | { kind: 'live'; fetchedAt: string; updatedAt?: string }
+
+export function formatBangkok(iso?: string): string {
+  if (!iso) return '-'
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return iso
+  return (
+    d.toLocaleString('en-GB', { timeZone: 'Asia/Bangkok', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit' }) +
+    ' (UTC+7)'
+  )
 }

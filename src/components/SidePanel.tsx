@@ -1,13 +1,14 @@
 import { useEffect, useRef } from 'react'
-import { STATUS_META, STATUS_ORDER, type OfficeData } from '../model'
+import { formatBangkok, STATUS_META, STATUS_ORDER, type DataSource, type OfficeData } from '../model'
 
 interface Props {
   data: OfficeData
+  source: DataSource
   selectedId: string | null
   onSelect: (id: string | null) => void
 }
 
-export function SidePanel({ data, selectedId, onSelect }: Props) {
+export function SidePanel({ data, source, selectedId, onSelect }: Props) {
   const listRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -17,13 +18,16 @@ export function SidePanel({ data, selectedId, onSelect }: Props) {
   }, [selectedId])
 
   const counts = STATUS_ORDER.map((s) => ({ s, n: data.agents.filter((a) => a.status === s).length }))
+  const live = source.kind === 'live'
+  const badgeText = live ? 'LIVE · Notion' : source.kind === 'offline' ? 'SAMPLE DATA (offline)' : 'CONNECTING…'
+  const badgeClass = live ? 'badge live' : source.kind === 'offline' ? 'badge offline' : 'badge'
 
   return (
     <aside className="panel">
       <header className="panel-head">
         <div className="panel-title">
           <span>Agents</span>
-          <span className="badge" title={data._note}>SAMPLE DATA</span>
+          <span className={badgeClass} title={data._note}>{badgeText}</span>
         </div>
         <div className="legend">
           {counts.map(({ s, n }) => (
@@ -54,7 +58,7 @@ export function SidePanel({ data, selectedId, onSelect }: Props) {
                     <span className="avatar" style={{ background: a.look.shirt, borderColor: a.look.hair }} />
                     <span className="agent-body">
                       <span className="agent-name">{a.name}</span>
-                      <span className="agent-task">{a.task}</span>
+                      <span className="agent-task">{a.task || 'No current task'}</span>
                     </span>
                     <span className="status" style={{ color: meta.color, borderColor: meta.color }}>
                       {meta.label}
@@ -67,9 +71,19 @@ export function SidePanel({ data, selectedId, onSelect }: Props) {
       </div>
 
       <footer className="panel-foot">
-        Sample data · edit <code>src/data/agents.json</code>
-        <br />
-        Updated {data.updatedAt}
+        {source.kind === 'live' ? (
+          <>
+            Live from Notion "Agent Status Board" · refreshes every 30s
+            <br />
+            Fetched {formatBangkok(source.fetchedAt)} · last edit {formatBangkok(source.updatedAt)}
+          </>
+        ) : (
+          <>
+            {source.kind === 'offline' ? 'Notion unavailable — showing sample data' : 'Connecting to Notion…'} · <code>src/data/agents.json</code>
+            <br />
+            Updated {data.updatedAt}
+          </>
+        )}
       </footer>
     </aside>
   )

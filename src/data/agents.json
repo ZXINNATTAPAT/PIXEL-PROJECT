@@ -21,6 +21,7 @@
   "agents": [
     {
       "id": "raphael",
+      "agentId": "64ba39ce-fe3e-448a-9079-c597338c89a5",
       "name": "Raphael · CEO",
       "short": "Raphael",
       "room": "exec",
@@ -35,6 +36,7 @@
     },
     {
       "id": "cio",
+      "agentId": "f738952c-e8fd-4702-94f5-3fff12cce6f0",
       "name": "CIO · SA&BA",
       "short": "CIO",
       "room": "exec",
@@ -49,6 +51,7 @@
     },
     {
       "id": "cto",
+      "agentId": "6a85a53f-0fcc-496f-86a4-750ad15a169f",
       "name": "CTO · Tech lead",
       "short": "CTO",
       "room": "exec",
@@ -63,6 +66,7 @@
     },
     {
       "id": "cqo",
+      "agentId": "0dab2b19-400c-4574-ab13-665d52313fd3",
       "name": "CQO · QA",
       "short": "CQO",
       "room": "exec",
@@ -77,6 +81,7 @@
     },
     {
       "id": "tester",
+      "agentId": "2892327e-3de8-4033-9417-1227b1dac78a",
       "name": "Tester",
       "short": "Tester",
       "room": "exec",
@@ -91,6 +96,7 @@
     },
     {
       "id": "cro",
+      "agentId": "ed6f87bc-1998-4578-a897-4de881dfe433",
       "name": "CRO · Chief Risk Officer",
       "short": "CRO",
       "room": "exec",
@@ -105,6 +111,7 @@
     },
     {
       "id": "diablo",
+      "agentId": "d25ee336-9473-4b6a-bddd-44fd8f2e0995",
       "name": "Diablo · Personal Chief of Staff",
       "short": "Diablo",
       "room": "cps",
@@ -119,6 +126,7 @@
     },
     {
       "id": "testarossa",
+      "agentId": "de6eb549-6e27-4e37-a2d7-0091d517acd7",
       "name": "Testarossa · Decision Journal",
       "short": "Testarossa",
       "room": "cps",
@@ -134,6 +142,7 @@
     },
     {
       "id": "michael",
+      "agentId": "405dc117-7833-467a-966c-ded5e0d6d6b6",
       "name": "Michael · CCO",
       "short": "Michael",
       "room": "cps",
@@ -147,6 +156,7 @@
     },
     {
       "id": "research-n",
+      "agentId": "8d07068a-2075-4937-9faa-6f7ebb70f6af",
       "name": "Research • nattazxin",
       "short": "Research N",
       "room": "cps",
@@ -161,6 +171,7 @@
     },
     {
       "id": "research-a",
+      "agentId": "7166e2c0-b6c9-41a6-b681-83cca2f4e7ed",
       "name": "Research · Affiliate Shop",
       "short": "Research A",
       "room": "cps",
@@ -175,6 +186,7 @@
     },
     {
       "id": "cerberus",
+      "agentId": "2bbb9ef7-b1ca-434b-9bd7-581b60506576",
       "name": "Cerberus · PFC",
       "short": "Cerberus",
       "room": "cps",
@@ -189,6 +201,7 @@
     },
     {
       "id": "alex",
+      "agentId": "1b254411-d051-4737-9774-73003dea913d",
       "name": "Alex · EMAIL MANAGER",
       "short": "Alex",
       "room": "growth",
@@ -203,6 +216,7 @@
     },
     {
       "id": "cgo",
+      "agentId": "9e5f2ad6-ccce-4937-a4a4-5c4b5345c157",
       "name": "CGO · Chief Growth Officer",
       "short": "CGO",
       "room": "growth",
