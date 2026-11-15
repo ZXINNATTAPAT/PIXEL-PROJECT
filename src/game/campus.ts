@@ -16,6 +16,7 @@ export const CAMPUS_ROOMS = [
   { id: 'lounge', name: 'Conference & Lounge', x: ROOM_WIDTH, y: ROOM_HEIGHT },
 ]
 
+//hello world
 export const waypoints: Waypoint[] = []
 const add = (id: string, room: string, x: number, y: number) => waypoints.push({ id, room, x: x * ROOM_SCALE, y: y * ROOM_SCALE, links: [] })
 const link = (a: string, b: string) => {
