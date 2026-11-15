@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
-import { OfficeCanvas } from './components/OfficeCanvas'
+import { useEffect, useState } from 'react'
+import { TensuraOffice } from './components/TensuraOffice'
 import { SidePanel } from './components/SidePanel'
 import raw from './data/agents.json'
 import type { DataSource, OfficeData } from './model'
@@ -17,10 +17,6 @@ function toggleFullscreen() {
   } else if (el.requestFullscreen) void el.requestFullscreen()
   else el.webkitRequestFullscreen?.()
 }
-
-// only the parts that change the drawing; avoids rebuilding the scene on every poll
-const sceneKey = (d: OfficeData) =>
-  JSON.stringify([d.rooms, d.agents.map((a) => [a.id, a.room, a.status, a.short, a.look])])
 
 export default function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null)
@@ -51,22 +47,16 @@ export default function App() {
     }
   }, [])
 
-  const key = sceneKey(data)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const sceneData = useMemo(() => data, [key])
-  const selected = data.agents.find((a) => a.id === selectedId)
+  const selectAgent = (id: string | null) => {
+    setSelectedId(id)
+  }
 
   return (
-    <div className="app">
+    <div className="app app--tempest">
       <main className="stage">
-        <div className="stage-bar">
-          <span className="logo">▣ Pixel Office</span>
-          <span className="stage-hint">{selected ? `${selected.name} — ${selected.task}` : 'Tap a character to see what they are doing'}</span>
-          <button className="fs" onClick={toggleFullscreen} title="Fullscreen">⛶</button>
-        </div>
-        <OfficeCanvas data={sceneData} selectedId={selectedId} onSelect={setSelectedId} />
+        <TensuraOffice data={data} selectedId={selectedId} onSelect={selectAgent} onToggleFullscreen={toggleFullscreen} />
       </main>
-      <SidePanel data={data} source={source} selectedId={selectedId} onSelect={setSelectedId} />
+      <SidePanel data={data} source={source} selectedId={selectedId} onSelect={selectAgent} />
     </div>
   )
 }

@@ -8,6 +8,7 @@ export interface Look {
   shirt: string
   longHair?: boolean
   accessory?: Accessory
+  theme?: 'raphael' | 'diablo' | 'testarossa' | 'michael' | 'goblin'
 }
 
 export interface Agent {

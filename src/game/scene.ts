@@ -40,7 +40,7 @@ export async function createScene(
 ): Promise<SceneController | null> {
   const app = new Application()
   await app.init({
-    background: 0x15121f,
+    background: 0xe4e9df,
     antialias: false,
     autoDensity: true,
     resolution: Math.min(window.devicePixelRatio || 1, 3),
@@ -82,11 +82,11 @@ export async function createScene(
   world.addChild(overlay)
   const selBox = new Graphics()
   const selArrow = new Graphics()
-  px(selArrow, 0, 0, 7, 2, 0xffd43b)
-  px(selArrow, 1, 2, 5, 1, 0xffd43b)
-  px(selArrow, 2, 3, 3, 1, 0xffd43b)
-  px(selArrow, 3, 4, 1, 1, 0xffd43b)
-  px(selArrow, 0, 0, 7, 1, 0xfff3bf)
+  px(selArrow, 0, 0, 7, 2, 0x128568)
+  px(selArrow, 1, 2, 5, 1, 0x128568)
+  px(selArrow, 2, 3, 3, 1, 0x128568)
+  px(selArrow, 3, 4, 1, 1, 0x128568)
+  px(selArrow, 0, 0, 7, 1, 0x9ee3bc)
   selArrow.pivot.set(3, 5)
   overlay.addChild(selBox)
   const labels = new Container()
@@ -110,7 +110,7 @@ export async function createScene(
 
     // desk parts are sorted individually, so they share one invisible hit target
     const hit = new Graphics()
-    px(hit, d.x - 2, d.y - 24, 36, 42, 0x000000, 0.001)
+    px(hit, d.x - 2, d.y - 28, 52, 48, 0x000000, 0.001)
     hit.eventMode = 'static'
     hit.cursor = 'pointer'
     hit.zIndex = d.y + 10
@@ -126,13 +126,13 @@ export async function createScene(
     frames.walk.visible = false
     body.eventMode = 'static'
     body.cursor = 'pointer'
-    body.hitArea = new Rectangle(-6, -CHAR_H - 2, 12, CHAR_H + 2)
+    body.hitArea = new Rectangle(-11, -CHAR_H - 4, 22, CHAR_H + 7)
     body.on('pointertap', (e) => {
       e.stopPropagation()
       onSelect(agent.id)
     })
 
-    const home = { x: d.x + 16, y: d.y + 3 }
+    const home = { x: d.x + 28, y: d.y + 5 }
     body.position.set(home.x, home.y)
     body.zIndex = home.y
 
@@ -144,11 +144,11 @@ export async function createScene(
 
     const label = new Text({
       text: agent.short,
-      style: { fontFamily: 'ui-monospace, Menlo, monospace', fontSize: 6, fontWeight: '700', fill: 0xffffff, stroke: { color: 0x15121f, width: 2 } },
+      style: { fontFamily: 'ui-monospace, Menlo, monospace', fontSize: 7, fontWeight: '700', fill: 0x233f3b, stroke: { color: 0xf5f3e8, width: 3 } },
       resolution: 8,
     })
     label.anchor.set(0.5, 0)
-    label.position.set(d.x + 16, d.y + 16)
+    label.position.set(d.x + 24, d.y + 22)
     labels.addChild(label)
 
     actors.push({
@@ -164,7 +164,7 @@ export async function createScene(
       pos: { ...home },
       target: null,
       mode: 'sit',
-      timer: rand(800, 3500),
+      timer: rand(6000, 16000),
       returning: false,
       phase: Math.random() * 1000,
     })
@@ -173,24 +173,24 @@ export async function createScene(
   let selected: string | null = null
   const drawSelection = () => {
     selBox.clear()
-    for (const a of actors) a.label.style.fill = a.agent.id === selected ? 0xffd43b : 0xffffff
+    for (const a of actors) a.label.style.fill = a.agent.id === selected ? 0x086b55 : 0x233f3b
     const a = actors.find((x) => x.agent.id === selected)
     selArrow.visible = !!a
     if (!a) return
     const { x, y } = a.desk
-    const c = 0xffd43b
-    px(selBox, x - 4, y - 30, 40, 1, c)
-    px(selBox, x - 4, y + 25, 40, 1, c)
-    px(selBox, x - 4, y - 30, 1, 56, c)
-    px(selBox, x + 35, y - 30, 1, 56, c)
+    const c = 0x128568
+    px(selBox, x - 4, y - 30, 56, 1, c)
+    px(selBox, x - 4, y + 33, 56, 1, c)
+    px(selBox, x - 4, y - 30, 1, 64, c)
+    px(selBox, x + 51, y - 30, 1, 64, c)
     // corner accents
     for (const [cx, cy] of [
       [x - 5, y - 31],
-      [x + 34, y - 31],
-      [x - 5, y + 24],
-      [x + 34, y + 24],
+      [x + 50, y - 31],
+      [x - 5, y + 32],
+      [x + 50, y + 32],
     ])
-      px(selBox, cx, cy, 3, 3, 0xfff3bf)
+      px(selBox, cx, cy, 3, 3, 0x9ee3bc)
   }
   drawSelection()
 
@@ -213,15 +213,17 @@ export async function createScene(
     a.frames.walk.visible = f === 'walk'
   }
 
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
   let t = 0
   app.ticker.add((ticker) => {
-    const dt = Math.min(ticker.deltaMS, 100)
+    const dt = reducedMotion.matches ? 0 : Math.min(ticker.deltaMS, 100)
     t += dt
     for (const a of actors) {
       const st = a.agent.status
       const tt = t + a.phase
       let bob = 0
       if (st === 'idle') {
+        bob = a.mode === 'sit' && Math.floor(tt / 1200) % 4 === 0 ? -1 : 0
         a.timer -= dt
         if (a.mode === 'sit' || a.mode === 'stand') {
           setFrame(a, 'base')
@@ -230,7 +232,7 @@ export async function createScene(
               a.target = { ...a.home }
               a.returning = true
             } else {
-              a.target = { x: a.home.x + Math.round(rand(-26, 26)), y: a.home.y - Math.round(rand(9, 24)) }
+              a.target = { x: a.home.x + Math.round(rand(-10, 16)), y: a.home.y - Math.round(rand(10, 18)) }
               a.returning = false
             }
             a.mode = 'walk'
@@ -246,7 +248,7 @@ export async function createScene(
             if (a.returning) {
               a.mode = 'sit'
               a.returning = false
-              a.timer = rand(2500, 6000)
+              a.timer = rand(8000, 16000)
             } else {
               a.mode = 'stand'
               a.timer = rand(900, 2600)
@@ -273,12 +275,13 @@ export async function createScene(
         setFrame(a, 'base')
       }
       a.body.position.set(Math.round(a.pos.x), Math.round(a.pos.y) + bob)
+      a.label.position.set(a.mode === 'sit' ? a.desk.x + 24 : Math.round(a.pos.x), a.mode === 'sit' ? a.desk.y + 22 : Math.round(a.pos.y) + 4)
       a.body.zIndex = a.mode === 'sit' ? a.home.y : Math.round(a.pos.y)
 
       // bubble floats above head
       const lift =
         st === 'waiting' ? (Math.floor(tt / 300) % 2 ? -2 : 0) : st === 'blocked' ? 0 : Math.floor(tt / 700) % 2 ? -1 : 0
-      a.bubble.position.set(Math.round(a.pos.x) + 6, Math.round(a.pos.y) - CHAR_H - 1 + lift + bob)
+      a.bubble.position.set(Math.round(a.pos.x) + 12, Math.round(a.pos.y) - CHAR_H - 1 + lift + bob)
       if (st === 'blocked') a.bubble.alpha = Math.floor(tt / 450) % 2 ? 0.55 : 1
       a.dots.forEach((d, i) => (d.alpha = Math.floor(tt / 250) % 4 > i ? 1 : 0.2))
 

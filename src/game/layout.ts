@@ -17,10 +17,10 @@ export interface RoomRect {
 }
 
 export const ROOM_RECTS: RoomRect[] = [
-  { id: 'exec', x: 1, y: 1, w: 19, h: 11, floorA: 0x4b4f7a, floorB: 0x545a8a, pattern: 'checker' },
-  { id: 'cps', x: 21, y: 1, w: 18, h: 11, floorA: 0x6b4f6e, floorB: 0x765979, pattern: 'checker' },
-  { id: 'growth', x: 1, y: 13, w: 19, h: 10, floorA: 0x3f6b5a, floorB: 0x477764, pattern: 'checker' },
-  { id: 'lounge', x: 21, y: 13, w: 18, h: 10, floorA: 0x9c6b43, floorB: 0xa8774d, pattern: 'planks' },
+  { id: 'exec', x: 1, y: 1, w: 19, h: 11, floorA: 0xc8d1c5, floorB: 0xc3cdbf, pattern: 'checker' },
+  { id: 'cps', x: 21, y: 1, w: 18, h: 11, floorA: 0xc7d4ce, floorB: 0xc2d0c9, pattern: 'checker' },
+  { id: 'growth', x: 1, y: 13, w: 19, h: 10, floorA: 0xbfcdbd, floorB: 0xbac8b8, pattern: 'checker' },
+  { id: 'lounge', x: 21, y: 13, w: 18, h: 10, floorA: 0xd6b88f, floorB: 0xdfc39e, pattern: 'planks' },
 ]
 
 // Door openings (tile rects) cut through walls.

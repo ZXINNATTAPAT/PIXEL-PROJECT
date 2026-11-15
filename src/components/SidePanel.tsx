@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { formatBangkok, STATUS_META, STATUS_ORDER, type DataSource, type OfficeData } from '../model'
+import { CharacterAvatar } from './CharacterAvatar'
+import { tensuraLook } from '../game/tensura-look'
 
 interface Props {
   data: OfficeData
@@ -26,9 +28,10 @@ export function SidePanel({ data, source, selectedId, onSelect }: Props) {
     <aside className="panel">
       <header className="panel-head">
         <div className="panel-title">
-          <span>Agents</span>
+          <span>Our people <small>{data.agents.length}</small></span>
           <span className={badgeClass} title={data._note}>{badgeText}</span>
         </div>
+        <p className="panel-subtitle">Good people. Great things in progress.</p>
         <div className="legend">
           {counts.map(({ s, n }) => (
             <span key={s} className="chip" title={STATUS_META[s].hint}>
@@ -43,6 +46,7 @@ export function SidePanel({ data, source, selectedId, onSelect }: Props) {
         {data.rooms.map((room) => (
           <section key={room.id} className="room">
             <h3 style={{ borderColor: room.accent }}>{room.name}</h3>
+            <div className="room-agents">
             {data.agents
               .filter((a) => a.room === room.id)
               .map((a) => {
@@ -53,9 +57,10 @@ export function SidePanel({ data, source, selectedId, onSelect }: Props) {
                     key={a.id}
                     data-agent={a.id}
                     className={`agent ${active ? 'active' : ''}`}
+                    aria-pressed={active}
                     onClick={() => onSelect(active ? null : a.id)}
                   >
-                    <span className="avatar" style={{ background: a.look.shirt, borderColor: a.look.hair }} />
+                    <span className="avatar-wrap" style={{ background: `${room.accent}18` }}><CharacterAvatar look={tensuraLook(a)} accent="#d9b967" /></span>
                     <span className="agent-body">
                       <span className="agent-name">{a.name}</span>
                       <span className="agent-task">{a.task || 'No current task'}</span>
@@ -66,6 +71,7 @@ export function SidePanel({ data, source, selectedId, onSelect }: Props) {
                   </button>
                 )
               })}
+            </div>
           </section>
         ))}
       </div>

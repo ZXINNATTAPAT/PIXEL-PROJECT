@@ -1,81 +1,23 @@
 import { Container, Graphics } from 'pixi.js'
-import { hex, shade, type Look, type Status } from '../model'
-import { drawMatrix, px, type Palette } from './pixels'
+import { shade, type Look, type Status } from '../model'
+import { drawMatrix, px } from './pixels'
 
-// 10 x 13 character, origin at the feet (bottom-centre).
-export const CHAR_W = 10
-export const CHAR_H = 13
-
-const BASE = [
-  '...HHHH...',
-  '..HHHHHH..',
-  '..HSSSSH..',
-  '..SESSES..',
-  '..bSSSSb..',
-  '...SSSS...',
-  '..CCCCCC..',
-  '.CCCCCCCC.',
-  '.CCDCCDCC.',
-  '.SCCCCCCS.',
-  '..PPPPPP..',
-  '..PP..PP..',
-  '..KK..KK..',
-]
-// typing frame: hands alternate
-const TYPE = BASE.map((r, i) => (i === 8 ? '.SCDCCDCC.' : i === 9 ? '.CCCCCCCS.' : r))
-// walking frame: legs apart
-const WALK = BASE.map((r, i) => (i === 11 ? '.PP....PP.' : i === 12 ? '.KK....KK.' : r))
-
-const ACCESSORY: Record<string, string[]> = {
-  crown: ['..Y.YY.Y..', '..YYYYYY..'],
-  horns: ['..R....R..', '..RR..RR..'],
-  cap: ['..........', '..AAAAAA..', '..AAAAAAAA'],
-  bow: ['......WW..', '.....WWW..'],
-}
-
-export type FrameName = 'base' | 'type' | 'walk'
+export { CHAR_H, CHAR_W, type FrameName } from './character'
+import { characterArt, CHAR_H, CHAR_W, type FrameName } from './character'
 
 export function buildCharacterFrames(look: Look, accent: number): Record<FrameName, Graphics> {
-  const pal: Palette = {
-    H: hex(look.hair),
-    S: hex(look.skin),
-    E: 0x2b2b3a,
-    b: shade(hex(look.skin), -0.12),
-    C: hex(look.shirt),
-    D: shade(hex(look.shirt), -0.35),
-    P: 0x3a3f58,
-    K: 0x24242e,
-    Y: 0xffd34d,
-    R: 0x9b1b30,
-    A: accent,
-    W: 0xff6fa8,
-    G: 0x22222c,
-    L: 0x9fe3ff,
-  }
-  const make = (rows: string[]) => {
+  const make = (frame: FrameName) => {
     const g = new Graphics()
-    const ox = -CHAR_W / 2
-    const oy = -CHAR_H
-    drawMatrix(g, rows, pal, ox, oy)
-    if (look.longHair) {
-      drawMatrix(g, ['..........', '..........', '.H......H.', '.H......H.', '.H......H.', '.H......H.'], pal, ox, oy)
-    }
-    const acc = look.accessory
-    if (acc && ACCESSORY[acc]) {
-      const rows2 = ACCESSORY[acc]
-      drawMatrix(g, rows2, pal, ox, oy - (acc === 'cap' ? 1 : 2))
-    } else if (acc === 'glasses') {
-      drawMatrix(g, ['..GLGGLG..'], pal, ox, oy + 3)
-    } else if (acc === 'headset') {
-      drawMatrix(g, ['..GGGGGG..', '.G......G.', '.G......G.', '.G......G.', '.GG.......'], pal, ox, oy)
-    }
+    px(g, -8, -2, 16, 3, 0x203b35, 0.2)
+    const { palette, layers } = characterArt(look, accent, frame)
+    for (const layer of layers) drawMatrix(g, layer.rows, palette, -CHAR_W / 2 + layer.x, -CHAR_H + layer.y)
     return g
   }
-  return { base: make(BASE), type: make(TYPE), walk: make(WALK) }
+  return { base: make('base'), type: make('type'), walk: make('walk') }
 }
 
 const ICONS: Record<Exclude<Status, 'working'>, string[]> = {
-  idle: ['11111', '...1.', '..1..', '.1...', '11111'],
+  idle: ['.1.1.', '.....', '11111', '1.1.1', '1111.'],
   waiting: ['.111.', '1...1', '..11.', '.....', '..1..'],
   done: ['....1', '...11', '1.11.', '111..', '.1...'],
   blocked: ['..1..', '..1..', '..1..', '.....', '..1..'],
@@ -126,37 +68,45 @@ export interface DeskParts {
   screen: Graphics
 }
 
-/** Desk with monitor, keyboard and mug. (x,y) = desk top-left, 32 x 16 px. */
+/** Workstation with a side monitor: the face and typing hands stay visible. */
 export function buildDesk(x: number, y: number, accent: number): DeskParts {
   const chair = new Graphics()
-  px(chair, x + 11, y - 9, 10, 8, 0x2e2a3d)
-  px(chair, x + 12, y - 8, 8, 6, shade(accent, -0.35))
-  px(chair, x + 11, y - 1, 10, 1, 0x1d1a28)
+  px(chair, x + 19, y - 18, 18, 17, 0x304b4b)
+  px(chair, x + 21, y - 16, 14, 12, shade(accent, -0.45))
+  px(chair, x + 22, y - 15, 12, 2, shade(accent, -0.15))
+  px(chair, x + 18, y - 5, 20, 3, 0x223a3d)
 
   const desk = new Graphics()
-  px(desk, x, y, 32, 9, 0xc8925a)
-  px(desk, x, y, 32, 1, 0xe2b27e)
-  px(desk, x, y + 9, 32, 5, 0x8a5a34)
-  px(desk, x, y + 9, 32, 1, 0x6e4628)
-  px(desk, x + 1, y + 14, 2, 2, 0x5b3a22)
-  px(desk, x + 29, y + 14, 2, 2, 0x5b3a22)
-  // monitor (left side)
-  px(desk, x + 1, y - 6, 11, 9, 0x2b2f3a)
-  px(desk, x + 5, y + 3, 3, 2, 0x2b2f3a)
-  px(desk, x + 3, y + 5, 7, 1, 0x2b2f3a)
-  // keyboard
-  px(desk, x + 11, y + 3, 10, 3, 0xd8dbe2)
-  px(desk, x + 12, y + 4, 8, 1, 0xa9aebb)
-  // mug
-  px(desk, x + 25, y + 2, 3, 4, 0xf4f4f4)
-  px(desk, x + 28, y + 3, 1, 2, 0xf4f4f4)
-  px(desk, x + 25, y + 2, 3, 1, 0x6b3e26)
-  // papers
-  px(desk, x + 23, y + 6, 6, 2, 0xfdf6e3)
+  px(desk, x - 2, y + 16, 52, 4, 0x203b35, 0.14)
+  px(desk, x + 2, y + 9, 3, 9, 0x3e5354)
+  px(desk, x + 43, y + 9, 3, 9, 0x3e5354)
+  px(desk, x, y - 1, 48, 12, 0xb88d61)
+  px(desk, x, y - 1, 48, 2, 0xf3d8ab)
+  px(desk, x, y + 1, 48, 7, 0xdfbd8d)
+  px(desk, x + 1, y + 8, 46, 2, 0xc89f71)
+  px(desk, x + 20, y + 10, 12, 1, accent)
+  // Angled-away monitor and a smaller laptop, both beside the character.
+  px(desk, x + 2, y - 13, 17, 13, 0x243d46)
+  px(desk, x + 3, y - 12, 15, 10, 0x375b67)
+  px(desk, x + 4, y - 11, 13, 1, 0x729ba5)
+  px(desk, x + 8, y, 4, 2, 0x3b535b)
+  px(desk, x + 5, y + 2, 10, 1, 0x3b535b)
+  px(desk, x + 22, y + 2, 14, 4, 0x52706c)
+  px(desk, x + 23, y + 2, 12, 2, 0xe9eee1)
+  px(desk, x + 25, y + 3, 8, 1, 0x97aca2)
+  px(desk, x + 38, y + 3, 2, 3, 0xf4f5e9)
+  // Ceramic coffee cup and notebook.
+  px(desk, x + 41, y - 3, 4, 5, 0xf8f5e8)
+  px(desk, x + 45, y - 2, 2, 3, 0xf8f5e8)
+  px(desk, x + 41, y - 3, 4, 1, 0x71523b)
+  px(desk, x + 3, y + 5, 9, 2, accent)
 
   const screen = new Graphics()
-  px(screen, x + 2, y - 5, 9, 6, 0x5ad1ff)
-  px(screen, x + 3, y - 4, 5, 1, 0xd9f6ff)
-  px(screen, x + 3, y - 2, 6, 1, 0xa8e8ff)
+  px(screen, x + 3, y - 12, 15, 10, 0x163f4b)
+  px(screen, x + 4, y - 11, 13, 1, 0x5f9a9a)
+  px(screen, x + 5, y - 8, 5, 1, 0x78e8bb)
+  px(screen, x + 7, y - 6, 8, 1, 0x89c9ed)
+  px(screen, x + 7, y - 4, 4, 1, 0xf3cf84)
+  px(screen, x + 13, y - 4, 2, 1, 0xe4f2e4)
   return { desk, chair, screen }
 }

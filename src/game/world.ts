@@ -2,19 +2,21 @@ import { Container, Graphics, Text } from 'pixi.js'
 import { DOORS, MAP_H, MAP_W, ROOM_RECTS, TILE } from './layout'
 import { px } from './pixels'
 
-const WALL_TOP = 0x2b2438
-const WALL_FACE = 0xe3d5bd
-const WALL_TRIM = 0x7a6352
-const DOOR_FLOOR = 0x8b7a66
+const WALL_TOP = 0x78918a
+const WALL_FACE = 0xf0eddd
+const WALL_TRIM = 0x658079
+const DOOR_FLOOR = 0xdadccd
 
 
 function windowAt(g: Graphics, x: number, y: number) {
-  px(g, x, y, 14, 10, WALL_TRIM)
-  px(g, x + 1, y + 1, 12, 8, 0x8fd3ff)
-  px(g, x + 1, y + 1, 12, 2, 0xc4ecff)
-  px(g, x + 7, y + 1, 1, 8, WALL_TRIM)
-  px(g, x + 1, y + 5, 12, 1, WALL_TRIM)
-  px(g, x - 1, y + 10, 16, 1, 0xcbb89a)
+  px(g, x, y, 28, 12, WALL_TRIM)
+  px(g, x + 1, y + 1, 26, 10, 0xc0e5e3)
+  px(g, x + 2, y + 2, 24, 3, 0xdff3e9)
+  px(g, x + 2, y + 8, 24, 3, 0x96bba3)
+  px(g, x + 3, y + 6, 7, 4, 0xabcbb1)
+  px(g, x + 16, y + 5, 7, 5, 0x87b49a)
+  px(g, x + 13, y + 1, 1, 10, WALL_TRIM)
+  px(g, x - 1, y + 12, 30, 2, 0xc2cbbd)
 }
 
 function wallClock(g: Graphics, x: number, y: number) {
@@ -29,7 +31,7 @@ function boardAt(g: Graphics, x: number, y: number, w: number, notes: boolean) {
   px(g, x, y, w, 11, 0x9aa0a8)
   px(g, x + 1, y + 1, w - 2, 9, 0xffffff)
   if (notes) {
-    const cols = [0xffe066, 0x8ce99a, 0x74c0fc, 0xffa8a8]
+    const cols = [0xf1d99a, 0x8ce99a, 0x74c0fc, 0xffa8a8]
     for (let i = 0; i < Math.floor((w - 4) / 5); i++) px(g, x + 2 + i * 5, y + 2 + (i % 2) * 4, 4, 3, cols[i % cols.length])
   } else {
     px(g, x + 3, y + 3, w - 10, 1, 0x4c6ef5)
@@ -40,14 +42,18 @@ function boardAt(g: Graphics, x: number, y: number, w: number, notes: boolean) {
 
 function plant(x: number, y: number): Graphics {
   const g = new Graphics()
-  px(g, x + 4, y + 9, 8, 6, 0xb5651d)
-  px(g, x + 4, y + 9, 8, 1, 0xd9823b)
-  px(g, x + 5, y + 15, 6, 1, 0x7a3f12)
-  px(g, x + 3, y + 3, 10, 6, 0x2f9e44)
-  px(g, x + 5, y, 6, 4, 0x40c057)
-  px(g, x + 1, y + 5, 3, 3, 0x37b24d)
-  px(g, x + 12, y + 4, 3, 3, 0x37b24d)
-  px(g, x + 6, y + 2, 2, 2, 0x8ce99a)
+  px(g, x + 1, y + 14, 18, 3, 0x314e41, 0.16)
+  px(g, x + 6, y + 5, 10, 10, 0xdfceab)
+  px(g, x + 7, y + 7, 8, 8, 0xf4e7cc)
+  px(g, x + 7, y + 5, 8, 2, 0x8d7556)
+  px(g, x + 10, y - 10, 2, 16, 0x486c46)
+  px(g, x + 2, y - 6, 8, 5, 0x40775a)
+  px(g, x, y - 9, 6, 5, 0x548c62)
+  px(g, x + 12, y - 13, 7, 7, 0x6a9b68)
+  px(g, x + 10, y - 16, 5, 7, 0x86b27a)
+  px(g, x + 12, y - 3, 9, 5, 0x3f795b)
+  px(g, x + 16, y - 5, 6, 5, 0x6f9f67)
+  px(g, x + 4, y, 6, 4, 0x73a16b)
   g.zIndex = y + 16
   return g
 }
@@ -108,15 +114,15 @@ function coffeeMachine(x: number, y: number): Graphics {
 
 function sofa(x: number, y: number): Graphics {
   const g = new Graphics()
-  const c = 0xe8590c
-  px(g, x, y, 64, 8, 0xc2410c)
+  const c = 0xb36c4f
+  px(g, x, y, 64, 8, 0x8f5645)
   px(g, x - 3, y + 4, 4, 14, c)
   px(g, x + 63, y + 4, 4, 14, c)
   px(g, x, y + 8, 64, 10, c)
-  px(g, x + 1, y + 8, 30, 1, 0xff8c42)
-  px(g, x + 33, y + 8, 30, 1, 0xff8c42)
-  px(g, x + 31, y + 8, 2, 10, 0xc2410c)
-  px(g, x + 6, y + 2, 10, 6, 0xffe066)
+  px(g, x + 1, y + 8, 30, 1, 0xd79c76)
+  px(g, x + 33, y + 8, 30, 1, 0xd79c76)
+  px(g, x + 31, y + 8, 2, 10, 0x8f5645)
+  px(g, x + 6, y + 2, 10, 6, 0xf1d99a)
   g.zIndex = y + 18
   return g
 }
@@ -147,6 +153,48 @@ function arcade(x: number, y: number): Graphics {
   return g
 }
 
+function meetingTable(x: number, y: number): Graphics {
+  const g = new Graphics()
+  for (const cx of [x + 8, x + 43]) {
+    px(g, cx, y - 9, 16, 12, 0x537d71)
+    px(g, cx + 2, y - 8, 12, 2, 0x7d9e87)
+    px(g, cx, y + 24, 16, 10, 0x537d71)
+    px(g, cx + 2, y + 31, 12, 2, 0x3d6059)
+  }
+  px(g, x + 3, y + 6, 66, 24, 0x284b40, 0.15)
+  px(g, x + 3, y, 62, 25, 0xa67e55)
+  px(g, x, y + 3, 68, 18, 0xe1c69d)
+  px(g, x + 3, y, 62, 21, 0xe1c69d)
+  px(g, x + 3, y, 62, 2, 0xf6dfb6)
+  for (const cx of [x + 10, x + 45]) {
+    px(g, cx, y + 4, 12, 8, 0x365562)
+    px(g, cx + 1, y + 5, 10, 6, 0x77b4b5)
+    px(g, cx - 1, y + 12, 14, 2, 0xeaf0e5)
+  }
+  px(g, x + 31, y + 8, 5, 6, 0xf6eed6)
+  px(g, x + 31, y + 5, 5, 5, 0x6d9968)
+  px(g, x + 24, y + 17, 5, 3, 0xf4cf7c)
+  px(g, x + 33, y + 18, 5, 3, 0xd48c89)
+  g.zIndex = y + 34
+  return g
+}
+
+function ideaBoard(x: number, y: number): Graphics {
+  const g = new Graphics()
+  px(g, x + 4, y + 17, 2, 12, 0x6c827b)
+  px(g, x + 32, y + 17, 2, 12, 0x6c827b)
+  px(g, x, y - 5, 40, 27, 0x81988a)
+  px(g, x + 2, y - 3, 36, 23, 0xf6f4e5)
+  for (let col = 0; col < 3; col++) {
+    px(g, x + 5 + col * 11, y, 8, 2, 0x81988a)
+    for (let row = 0; row < 2; row++) px(g, x + 5 + col * 11, y + 5 + row * 7, 7, 5, [0xe9c571, 0x99c7af, 0xdb9e99][col])
+  }
+  px(g, x - 1, y + 28, 10, 2, 0x6c827b)
+  px(g, x + 29, y + 28, 10, 2, 0x6c827b)
+  g.zIndex = y + 30
+  return g
+}
+
 function sign(text: string, x: number, y: number, accent: number): Container {
   const c = new Container()
   const t = new Text({
@@ -156,8 +204,8 @@ function sign(text: string, x: number, y: number, accent: number): Container {
   })
   const w = Math.ceil(t.width) + 8
   const g = new Graphics()
-  px(g, 0, 0, w, 11, 0x2b2438)
-  px(g, 1, 1, w - 2, 9, 0x3d3450)
+  px(g, 0, 0, w, 11, 0x294a42)
+  px(g, 1, 1, w - 2, 9, 0x36574d)
   px(g, 1, 9, w - 2, 1, accent)
   t.position.set(4, 1.5)
   c.addChild(g, t)
@@ -170,7 +218,7 @@ export function buildWorld(roomNames: Record<string, { name: string; accent: num
   const g = new Graphics()
   px(g, 0, 0, MAP_W, MAP_H, WALL_TOP)
   // subtle wall-top texture
-  for (let i = 0; i < MAP_W; i += 8) px(g, i, 0, 4, 2, 0x352d45)
+  for (let i = 0; i < MAP_W; i += 8) px(g, i, 0, 4, 2, 0x8ba298)
 
   for (const r of ROOM_RECTS) {
     const x0 = r.x * TILE
@@ -183,9 +231,9 @@ export function buildWorld(roomNames: Record<string, { name: string; accent: num
     } else {
       px(g, x0, y0, w, h, r.floorA)
       for (let ty = 0; ty < h; ty += 6) {
-        px(g, x0, y0 + ty, w, 1, 0x7d5232)
+        px(g, x0, y0 + ty, w, 1, 0xc3a47e)
         const off = (ty / 6) % 2 ? 0 : 24
-        for (let tx = off; tx < w; tx += 48) px(g, x0 + tx, y0 + ty, 1, 6, 0x7d5232)
+        for (let tx = off; tx < w; tx += 48) px(g, x0 + tx, y0 + ty, 1, 6, 0xc3a47e)
         px(g, x0, y0 + ty + 2, w, 1, r.floorB)
       }
     }
@@ -201,6 +249,20 @@ export function buildWorld(roomNames: Record<string, { name: string; accent: num
   for (const d of DOORS) {
     px(g, d.x * TILE, d.y * TILE, d.w * TILE, d.h * TILE, DOOR_FLOOR)
     px(g, d.x * TILE, d.y * TILE, d.w * TILE, 1, 0x6d5f4f)
+  }
+  // Glass partitions keep the teams connected across the campus.
+  for (const [y, h] of [[32, 64], [128, 64], [224, 64], [320, 48]]) {
+    px(g, 321, y, 14, h, 0xb6d3c9)
+    px(g, 323, y, 2, h, 0xe2eee0)
+    px(g, 331, y, 2, h, 0x88aaa1)
+    for (let sy = y + 12; sy < y + h; sy += 24) px(g, 325, sy, 5, 2, 0xdce9d9)
+  }
+  px(g, 16, 194, 608, 12, 0xdadccd)
+  for (let x = 32; x < 624; x += 32) px(g, x, 199, 8, 1, 0xb4bfb1)
+  // Soft daylight on the floor under the windows.
+  for (const x of [32, 80, 352, 400]) {
+    px(g, x, 34, 28, 12, 0xfff7d2, 0.18)
+    px(g, x + 4, 46, 28, 5, 0xfff7d2, 0.1)
   }
   ground.addChild(g)
 
@@ -223,9 +285,9 @@ export function buildWorld(roomNames: Record<string, { name: string; accent: num
 
   // rug in lounge
   const rug = new Graphics()
-  px(rug, 23 * TILE, 15 * TILE + 8, 6 * TILE, 4 * TILE, 0x5c7cfa)
-  px(rug, 23 * TILE + 3, 15 * TILE + 11, 6 * TILE - 6, 4 * TILE - 6, 0x748ffc)
-  px(rug, 23 * TILE + 6, 15 * TILE + 14, 6 * TILE - 12, 4 * TILE - 12, 0x5c7cfa)
+  px(rug, 23 * TILE, 15 * TILE + 8, 6 * TILE, 4 * TILE, 0x76988e)
+  px(rug, 23 * TILE + 3, 15 * TILE + 11, 6 * TILE - 6, 4 * TILE - 6, 0xa6c0ae)
+  px(rug, 23 * TILE + 6, 15 * TILE + 14, 6 * TILE - 12, 4 * TILE - 12, 0x76988e)
   ground.addChild(rug)
 
   // room signs on the wall face
@@ -238,24 +300,26 @@ export function buildWorld(roomNames: Record<string, { name: string; accent: num
     const info = roomNames[id]
     if (info) ground.addChild(sign(info.name, x, y, info.accent))
   }
-  ground.addChild(sign('Lounge', 31 * TILE, 13 * TILE + 2, 0xffa94d))
+  ground.addChild(sign('COFFEE & COLLAB', 31 * TILE, 13 * TILE + 2, 0xffa94d))
 
   const props: Graphics[] = [
     bookshelf(17 * TILE, 2 * TILE + 10),
     plant(1 * TILE, 10 * TILE),
-    plant(7 * TILE, 2 * TILE),
+    plant(7 * TILE, 3 * TILE),
     plant(19 * TILE, 10 * TILE),
     bookshelf(36 * TILE + 8, 2 * TILE + 10),
     plant(21 * TILE, 10 * TILE),
     plant(38 * TILE, 10 * TILE),
     waterCooler(33 * TILE, 10 * TILE),
     printer(15 * TILE, 15 * TILE),
+    ideaBoard(16 * TILE, 18 * TILE),
     plant(18 * TILE, 15 * TILE),
     plant(1 * TILE, 21 * TILE),
     plant(19 * TILE, 21 * TILE),
     sofa(23 * TILE, 15 * TILE + 4),
     coffeeTable(24 * TILE + 4, 18 * TILE),
     coffeeMachine(34 * TILE, 14 * TILE + 8),
+    meetingTable(32 * TILE, 19 * TILE),
     arcade(31 * TILE, 15 * TILE),
     waterCooler(37 * TILE, 15 * TILE),
     plant(21 * TILE, 21 * TILE),
