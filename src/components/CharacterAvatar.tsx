@@ -8,6 +8,7 @@ export function CharacterAvatar({ look, accent }: { look: Look; accent: string }
   }
 
   // FIXME: characterArt is deprecated
+  
   const { palette, layers } = characterArt(look, hex(accent))
   return (
     <svg className="avatar" viewBox="-3 -4 22 30" aria-hidden="true" shapeRendering="crispEdges">
