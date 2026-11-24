@@ -7,7 +7,7 @@ export function CharacterAvatar({ look, accent }: { look: Look; accent: string }
     return <span className="avatar generated-avatar" aria-hidden="true" style={{ backgroundImage: `url("${import.meta.env.BASE_URL}images/tensura/${CHARACTER_SHEETS[look.theme]}")` }} />
   }
 
-  //test rebase 2
+  //test rebase 3
 
   const { palette, layers } = characterArt(look, hex(accent))
   return (
