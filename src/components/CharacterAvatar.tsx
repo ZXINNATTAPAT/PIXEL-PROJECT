@@ -6,6 +6,8 @@ export function CharacterAvatar({ look, accent }: { look: Look; accent: string }
   if (look.theme) {
     return <span className="avatar generated-avatar" aria-hidden="true" style={{ backgroundImage: `url("${import.meta.env.BASE_URL}images/tensura/${CHARACTER_SHEETS[look.theme]}")` }} />
   }
+
+
   
   const { palette, layers } = characterArt(look, hex(accent))
   return (
